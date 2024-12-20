@@ -2,30 +2,35 @@ class MathLib:
 
     @classmethod
     def execute(cls, math_request):
-        operator = None
+        operator = math_request.get_operator()
+        ope1= math_request.get_ope1()
+        ope2= math_request.get_ope2()
 
         match operator:
             case 'add':
-                raise NotImplementedError
+                math_request.set_res(ope1 + ope2)
             case 'sub':
-                raise NotImplementedError
+                math_request.set_res(ope1 - ope2)
             case 'mul':
-                raise NotImplementedError
+                math_request.set_res(ope1 * ope2)
             case 'div':
-                raise NotImplementedError
+                if ope2 == 0:
+                    raise ValueError('Division by zero')
+                else:
+                    math_request.set_res(ope1 / ope2)
             case 'pow':
-                raise NotImplementedError
+                math_request.set_res(ope1 ** ope2)
             case 'root':
-                raise NotImplementedError
+                math_request.set_res(cls.__root(ope1, ope2))
             case _:
-                raise NotImplementedError
+                raise OperatorNotSupportedException
 
     @staticmethod
     def __root(ope1, ope2):
-        raise NotImplementedError
+        return round(ope1 ** (1/ope2), 2)
 
 class MathLibException(Exception):
     pass
 
 class OperatorNotSupportedException(MathLibException):
-    pass
+    print('Operator not supported')
